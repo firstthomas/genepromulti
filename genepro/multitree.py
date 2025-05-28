@@ -32,3 +32,36 @@ class Multitree(nn.Module):
 
   def get_readable_repr(self) -> str:
     return [child.get_readable_repr() for child in self.children]
+
+  def to_genotype(self, node_types: list) -> list:
+    """
+    Converts the multitree to a genotype representation.
+    Parameters
+    ----------
+    node_types : list
+        A list of indices representing the types of nodes in the genotype.
+    Returns a list of nodes representing the genotype of the multitree.
+    """
+    # TODO
+    return []
+
+def generate_multitree_from_genotype(genotype: list, n_trees: int, node_types: list) -> Multitree:
+    """
+    Generates a multitree from a genotype.
+    
+    Parameters
+    ----------
+    genotype : list
+        A list of nodes representing the genotype.
+    n_trees : int
+        The number of trees in the multitree.
+    node_types : list
+        A list of node types corresponding to the genotype.
+
+    Returns
+    -------
+    Multitree
+        The generated multitree.
+    """
+    # TODO
+    return multitree
