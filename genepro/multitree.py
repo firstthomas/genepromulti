@@ -1,5 +1,4 @@
 from __future__ import annotations
-from genepro.fos import FOS
 import numpy as np
 import torch.nn as nn
 import torch

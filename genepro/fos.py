@@ -1,5 +1,7 @@
 from typing import List, Sequence
 
+from genepro.multitree import Multitree
+
 
 class FOS:
     """
@@ -35,7 +37,7 @@ class FOS:
     def __repr__(self) -> str:
         return f"FOS({self.subsets})"
 
-def generate_fos_from_population(population: List[Sequence[int]]) -> FOS:
+def generate_fos_from_population(population: List[Multitree]) -> FOS:
     """
     Generate a Family of Subsets (FOS) from a population of genotypes.
     
@@ -50,4 +52,5 @@ def generate_fos_from_population(population: List[Sequence[int]]) -> FOS:
         An instance of FOS containing subsets derived from the population.
     """
     # TODO
+    genotypes = [tree.to_genotype() for tree in population]
     return FOS([])
