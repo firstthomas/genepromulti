@@ -1,5 +1,6 @@
 from typing import Callable
 
+from genepro.variation_fos import generate_offspring_fos
 import numpy as np
 from numpy.random import random as randu
 from numpy.random import randint as randi
@@ -99,7 +100,7 @@ class Evolution:
     crossovers : list=[{"fun":subtree_crossover, "rate": 0.5}],
     mutations : list= [{"fun":subtree_mutation, "rate": 0.5}],
     coeff_opts : list = [{"fun":coeff_mutation, "rate": 0.5}],
-    selection : dict={"fun":tournament_selection,"kwargs":{"tournament_size":8}},
+    selection : dict={"fun":tournament_selection,"kwargs":{"tournament_size":2}},
     # termination criteria
     max_evals : int=None,
     max_gens : int=100,
@@ -191,11 +192,13 @@ class Evolution:
     """
     # select promising parents
     sel_fun = self.selection["fun"]
+    # TODO change to only use offspring_population
     parents = sel_fun(self.population, self.pop_size, **self.selection["kwargs"])
     # generate offspring
-    offspring_population = Parallel(n_jobs=self.n_jobs)(delayed(generate_offspring)
+    fos = generate_fos_from_population(parents)
+    offspring_population = Parallel(n_jobs=self.n_jobs)(delayed(generate_offspring_fos)
       (t, self.crossovers, self.mutations, self.coeff_opts, 
-      parents, self.internal_nodes, self.leaf_nodes,
+      parents, self.internal_nodes, self.leaf_nodes, fos,
       constraints={"max_tree_size": self.max_tree_size}) 
       for t in parents)
 

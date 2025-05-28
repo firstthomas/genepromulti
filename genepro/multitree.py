@@ -45,18 +45,6 @@ class Multitree(nn.Module):
     """
     # TODO
     return []
-  
-  def generate_fos(self) -> FOS:
-    """
-    Generates a Family of Subsets (FOS) from the multitree.
-    
-    Returns
-    -------
-    FOS
-        A Family of Subsets representing the multitree.
-    """
-    # TODO
-    return FOS([])
 
 def generate_multitree_from_genotype(genotype: list, n_trees: int, node_types: list) -> Multitree:
     """

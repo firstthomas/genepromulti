@@ -34,3 +34,20 @@ class FOS:
 
     def __repr__(self) -> str:
         return f"FOS({self.subsets})"
+
+def generate_fos_from_population(population: List[Sequence[int]]) -> FOS:
+    """
+    Generate a Family of Subsets (FOS) from a population of genotypes.
+    
+    Parameters
+    ----------
+    population : List[Sequence[int]]
+        A list of genotypes, where each genotype is a sequence of integers.
+    
+    Returns
+    -------
+    FOS
+        An instance of FOS containing subsets derived from the population.
+    """
+    # TODO
+    return FOS([])
