@@ -1,4 +1,5 @@
 from __future__ import annotations
+from genepro.fos import FOS
 import numpy as np
 import torch.nn as nn
 import torch
@@ -44,6 +45,18 @@ class Multitree(nn.Module):
     """
     # TODO
     return []
+  
+  def generate_fos(self) -> FOS:
+    """
+    Generates a Family of Subsets (FOS) from the multitree.
+    
+    Returns
+    -------
+    FOS
+        A Family of Subsets representing the multitree.
+    """
+    # TODO
+    return FOS([])
 
 def generate_multitree_from_genotype(genotype: list, n_trees: int, node_types: list) -> Multitree:
     """
@@ -64,4 +77,4 @@ def generate_multitree_from_genotype(genotype: list, n_trees: int, node_types: l
         The generated multitree.
     """
     # TODO
-    return multitree
+    return Multitree(0)
