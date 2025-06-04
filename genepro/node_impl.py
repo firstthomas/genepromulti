@@ -8,6 +8,7 @@ class Plus(Node, nn.Module):
     super(Plus,self).__init__()
     self.arity = 2
     self.symb = '+'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'between')
@@ -25,6 +26,7 @@ class Minus(Node, nn.Module):
     super(Minus,self).__init__()
     self.arity = 2
     self.symb = '-'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'between')
@@ -43,6 +45,7 @@ class Times(Node, nn.Module):
     super(Times,self).__init__()
     self.arity = 2
     self.symb = '*'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'between')
@@ -61,6 +64,7 @@ class Div(Node):
     super(Div,self).__init__()
     self.arity = 2
     self.symb = '/'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'between')
@@ -88,6 +92,7 @@ class Square(Node):
     super(Square,self).__init__()
     self.arity = 1
     self.symb = '**2'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'after')
@@ -106,6 +111,7 @@ class Cube(Node):
     super(Cube,self).__init__()
     self.arity = 1
     self.symb = '**3'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'after')
@@ -120,6 +126,7 @@ class Sqrt(Node):
     super(Sqrt,self).__init__()
     self.arity = 1
     self.symb = 'sqrt'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     # let's report also protection
@@ -140,6 +147,7 @@ class Log(Node):
     super(Log,self).__init__()
     self.arity = 1
     self.symb = 'log'
+    self.type = "float"
 
   def _get_args_repr(self, args):
     # let's report also protection (to some level of detail)
@@ -162,6 +170,7 @@ class Exp(Node):
     super(Exp,self).__init__()
     self.arity = 1
     self.symb = "exp"
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'before')
@@ -176,6 +185,7 @@ class Sin(Node):
     super(Sin,self).__init__()
     self.arity = 1
     self.symb = "sin"
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'before')
@@ -188,12 +198,12 @@ class Sin(Node):
     c_outs = self._get_child_outputs_pt(X)
     return torch.sin(c_outs[0])
 
-
 class Cos(Node):
   def __init__(self):
     super(Cos,self).__init__()
     self.arity = 1
     self.symb = "cos"
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,'before')
@@ -212,6 +222,7 @@ class Max(Node):
     super(Max,self).__init__()
     self.arity = 2
     self.symb = "max"
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,"before")
@@ -230,6 +241,7 @@ class Min(Node):
     super(Min,self).__init__()
     self.arity = 2
     self.symb = "min"
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self._get_typical_repr(args,"before")
@@ -248,6 +260,7 @@ class Feature(Node, nn.Module):
     self.arity = 0
     self.id = id
     self.symb = 'x_'+str(id)
+    self.type = "float"
 
   def _get_args_repr(self, args):
     return self.symb
@@ -266,6 +279,7 @@ class Constant(Node, nn.Module):
     self.__value = value
     self.symb = str(value) if value is not None else "const?"
     self.pt_value = None
+    self.type = "float"
 
   def get_value(self):
     if not self.__value:
