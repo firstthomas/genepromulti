@@ -12,13 +12,12 @@ from genepro.custom_node_impl import *
 
 def generate_random_multitree(n_trees : int, internal_nodes : list, leaf_nodes : list, max_depth : int):
   multitree = Multitree(n_trees)
-  bool_nodes = [node for node in internal_nodes if node.type == "bool"]
-  float_nodes = [node for node in internal_nodes if node.type == "float"]
+
   for _ in range(n_trees):
-    multitree.children.append(generate_random_tree(bool_nodes,float_nodes, leaf_nodes, max_depth, curr_depth=0))
+    multitree.children.append(generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth=0))
   return multitree
 
-def generate_random_tree(float_nodes : list, bool_nodes: list, leaf_nodes : list, max_depth : int, curr_depth : int=0):
+def generate_random_tree(internal_nodes: list, leaf_nodes : list, max_depth : int, curr_depth : int=0):
   """
   Recursive method to generate a random tree containing the given types of nodes and up to the given maximum depth
 
@@ -38,46 +37,52 @@ def generate_random_tree(float_nodes : list, bool_nodes: list, leaf_nodes : list
   Node
     the root node of the generated tree
   """
-
+  bool_nodes = [node for node in internal_nodes if node.type == "bool"]
+  float_nodes = [node for node in internal_nodes if node.type == "float"]
+  
   # heuristic to generate a semi-normal centered on relatively large trees
   prob_leaf = 0.01 + (curr_depth / max_depth)**3
 
+  n = leaf_nodes[0]
   if curr_depth == max_depth or randu() < prob_leaf:
     n = deepcopy(randc(leaf_nodes))
   else:
     n = deepcopy(randc(float_nodes))
+  
+  
 
 
   if isinstance(n, BooleanIf):
     # Generate boolean tree for first child (condition)
     if bool_nodes:
       # Generate boolean condition as first child
-      bool_child = generate_bool_tree(float_nodes, bool_nodes, leaf_nodes, max_depth, curr_depth+1)
+      bool_child = generate_bool_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
       n.insert_child(bool_child)
       
       # Generate remaining children normally
       for _ in range(n.arity - 1):
-        c = generate_random_tree(float_nodes, bool_nodes, leaf_nodes, max_depth, curr_depth+1)
+        c = generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
         n.insert_child(c)
     else:
       # Fallback if no boolean nodes available - generate all children normally
       for _ in range(n.arity):
-        c = generate_random_tree(float_nodes, bool_nodes, leaf_nodes, max_depth, curr_depth+1)
+        c = generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
         n.insert_child(c)
-  else:
+  elif isinstance(n, Node):
     for _ in range(n.arity):
-      c = generate_random_tree(float_nodes, bool_nodes, leaf_nodes, max_depth, curr_depth+1)
+      c = generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
       n.insert_child(c)
   
+  print("N type: ", type(n))
   n.get_readable_repr()
   
   return n
 
-def generate_bool_tree(float_nodes:list, bool_nodes: list, leaf_nodes:list, max_depth:int, curr_depth:int=0):
-  
+def generate_bool_tree(internal_nodes: list, leaf_nodes:list, max_depth:int, curr_depth:int=0):
+  bool_nodes = [node for node in internal_nodes if node.type == "bool"]
   n = deepcopy(randc(bool_nodes))
   for _ in range(n.arity):
-      c = generate_random_tree(float_nodes, bool_nodes, leaf_nodes, max_depth, curr_depth+1)
+      c = generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
       n.insert_child(c)
   
   return n
@@ -223,7 +228,10 @@ def subtree_mutation(multitree : Multitree, internal_nodes : list, leaf_nodes : 
   tree = multitree.children[r]
   n = __sample_node(tree, unif_depth)
   # generate a random branch
-  branch = generate_random_tree(internal_nodes, leaf_nodes, max_depth, prob_leaf)
+  if n.type == "bool":
+    branch = generate_bool_tree(internal_nodes, leaf_nodes, max_depth, prob_leaf)
+  elif n.type == "float":
+    branch = generate_random_tree(internal_nodes, leaf_nodes, max_depth, prob_leaf)
   # swap
   p = n.parent
   if p:

@@ -233,7 +233,7 @@ class Evolution:
     self.start_time = time.time()
 
     self._initialize_population()
-
+    print("Population initialized!")
     # generational loop
     while not self._must_terminate():
       # perform one generation
