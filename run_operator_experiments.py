@@ -197,12 +197,9 @@ internal_nodes_math = [Plus(),Minus(),Times(),Div(),Min(),Max(),Abs()]
 internal_nodes_bool = [Plus(),Minus(),Times(),Div(),BooleanIf(),GreaterThan()]
 internal_nodes_transcendental = [Plus(),Minus(),Times(),Div(),Sin(),Cos(),Exp(),Log()]
 internal_nodes_all = [Plus(),Minus(),Times(),Div(),Min(),Max(),Abs(),BooleanIf(),GreaterThan(),Sin(),Cos(),Exp(),Log()]
-# internal_nodes_sets = [internal_nodes_baseline, internal_nodes_math, internal_nodes_bool, internal_nodes_transcendental, internal_nodes_all]
-internal_nodes_sets = [internal_nodes_all]
-
-# internal_nodes_sets_names = ["Baseline", "Math", "Boolean", "Transcendental", "All"]
-internal_nodes_sets_names = ["All"]
+internal_nodes_sets = [internal_nodes_baseline, internal_nodes_math, internal_nodes_bool, internal_nodes_transcendental, internal_nodes_all]
+internal_nodes_sets_names = ["Baseline", "Math", "Boolean", "Transcendental", "All"]
 
 data = test_operators(internal_nodes_sets, internal_nodes_sets_names)
-# data = load_csv("results_operators/population_sizes.csv")
+# data = load_csv("results_operators/test_operators.csv")
 plot(data)
