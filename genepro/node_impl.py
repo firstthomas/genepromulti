@@ -178,6 +178,10 @@ class Exp(Node):
   def get_output(self, X):
     c_outs = self._get_child_outputs(X)
     return np.exp(c_outs[0])
+  
+  def get_output_pt(self, X):
+    c_outs = self._get_child_outputs_pt(X)
+    return torch.exp(c_outs[0])
 
 
 class Sin(Node):

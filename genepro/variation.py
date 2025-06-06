@@ -73,7 +73,7 @@ def generate_random_tree(internal_nodes: list, leaf_nodes : list, max_depth : in
       c = generate_random_tree(internal_nodes, leaf_nodes, max_depth, curr_depth+1)
       n.insert_child(c)
   
-  print("N type: ", type(n))
+  # print("N type: ", type(n))
   n.get_readable_repr()
   
   return n
