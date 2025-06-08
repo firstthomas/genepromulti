@@ -1,0 +1,4 @@
+tune rate
+run overnight
+use plots with variance
+statistical significance
